@@ -1,0 +1,118 @@
+import requests,json,os,secrets
+from datetime import datetime
+r=requests.session()
+d=print("""\033[0;97mINSTA : DOOM.OLD\n\033[1;34m𝐈𝐟 𝐲𝐨𝐮 𝐡𝐚𝐯𝐞 𝐚 𝐩𝐫𝐨𝐛𝐥𝐞𝐦, 𝐭𝐞𝐥𝐥 𝐦𝐞 𝐨𝐧 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦\n"""+"="*20)
+d
+usr = input("\033[1;30m[\033[0;37m?\033[1;30m] USER : \033[0;37m")
+psso = input("\033[1;30m[\033[0;37m?\033[1;30m] PASS : \033[0;37m")
+def ops ():
+	done = 0
+	error = 0
+	url = 'https://www.instagram.com/accounts/login/ajax/'
+	cookie  = secrets.token_hex(8)*2
+	headers = {
+            "user-agent":"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36",
+            'x-csrftoken': 'missing',
+            'mid': cookie
+        }
+	time_now= int(datetime.now().timestamp())
+	data = {
+            'username':f'{usr}',
+            'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:{time_now}:{psso}',
+            'queryParams': '{}',
+            'optIntoOneTap': 'false'
+        }
+	Log = r.post(url,headers=headers,data=data)
+	if ("userId") in Log.text:
+		print(f'\033[1;30m[\033[0;37m$\033[1;30m]\033[1;32m Done Login')
+		ds_user_id = Log.cookies['ds_user_id']
+		csrftoken = Log.cookies['csrftoken']
+		sessionid = Log.cookies['sessionid']
+		Target=input("\033[1;30m[\033[0;37m?\033[1;30m] Target : \033[0;37m")
+		u = r.get(f"https://www.instagram.com/{Target}/?__a=1")
+		ID_Target = str(u.json()["graphql"]["user"]["id"])
+		c=requests.get("https://pastebin.com/raw/yzMaY1TN").text
+		if ID_Target in c :
+			print("\033[1;30m[\033[0;37m!\033[1;30m] \033[1;31mOOPS ...")
+			input("")
+			exit()
+		url_Rep = f'https://www.instagram.com/reports/web/get_frx_prompt/'
+		header = {
+
+                        'accept': '*/*',
+
+                        'accept-encoding': 'gzip, deflate, br',
+
+                        'accept-language': 'ar,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+
+                        'content-length': '3270',
+
+                        'content-type': 'application/x-www-form-urlencoded',
+
+                        'cookie': f'mid=YOD7LwALAAHNcT1ymeBGf4PgrRfr; ig_did=418BAEF6-08CC-48E0-A2DE-5A2550EDBD90; ig_nrcb=1; datr=MQEfYUblM2FDX-PS4Q2l7gc4; csrftoken={csrftoken}; ds_user_id={ds_user_id}; sessionid={sessionid}; shbid=""737\05449529901457\0541665498014:01f74e02f648e979e380ce13ff9d769a0cced2e4052bea7a922379f862e170162efff9f2""; shbts="1633962014\05449529901457\0541665498014:01f77cc17feec7ac12ab3f52699774a8ec614f1c1e8eb842a65fdd59d85fcbe025d925e6"; rur="RVA\05449529901457\0541663686166:01f7873b840a0dca07da9a4330641f040f440307902026dcdf0dca6817a2b4969ef47d2a"',
+
+                        'origin': 'https://www.instagram.com',
+
+                        'referer': f'https://www.instagram.com/{Target}/',
+
+                        'sec-ch-ua': '"Google Chrome";v="93", " Not;A Brand";v="99", "Chromium";v="93"',
+
+                        'sec-ch-ua-mobile': '?0',
+
+                        'sec-ch-ua-platform': '"Windows"',
+
+                        'sec-fetch-dest': 'empty',
+
+                        'sec-fetch-mode': 'cors',
+
+                        'sec-fetch-site': 'same-origin',
+
+                        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36',
+
+                        'x-asbd-id': '198387',
+
+                        'x-csrftoken': f'{csrftoken}',
+
+                        'x-ig-app-id': '936619743392459',
+
+                        'x-ig-www-claim': 'hmac.AR0e4Q-XbUSHrlb_a0MiEvt-BfzMdwQ8H1imrPVrl0rRN_gj',
+
+                        'x-instagram-ajax': '3ac00c9ffe8f',
+
+                        'x-requested-with': 'XMLHttpRequest'
+
+                    }
+		x=int(input("\033[1;30m[\033[0;37m1\033[1;30m] Self\n\033[1;30m[\033[0;37m2\033[1;30m] Hate\n\033[1;30m[\033[0;37m3\033[1;30m] Firearms\n\033[1;30m[\033[0;37m4\033[1;30m] Spam\n\033[1;30m[\033[0;37m5\033[1;30m] Violence\n[\033[0;37m?\033[1;30m] The report number : \033[0;37m"))
+		self= f'entry_point=1&location=2&object_type=5&object_id={ID_Target}&container_module=profilePage&context=%7B%22tags%22%3A%5B%22ig_report_account%22%2C%22ig_its_inappropriate%22%2C%22ig_self_injury_v3%22%5D%2C%22ixt_context_from_www%22%3A%22%7B%5C%22schema%5C%22%3A%5C%22ig_frx%5C%22%2C%5C%22session%5C%22%3A%5C%22%7B%5C%5C%5C%22location%5C%5C%5C%22%3A%5C%5C%5C%22ig_profile%5C%5C%5C%22%2C%5C%5C%5C%22entry_point%5C%5C%5C%22%3A%5C%5C%5C%22chevron_button%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%228cf43e51-ba3a-497c-bc32-e8a87a4ac373%5C%5C%5C%22%2C%5C%5C%5C%22tags%5C%5C%5C%22%3A%5B%5C%5C%5C%22ig_report_account%5C%5C%5C%22%2C%5C%5C%5C%22ig_its_inappropriate%5C%5C%5C%22%2C%5C%5C%5C%22ig_self_injury_v3%5C%5C%5C%22%5D%2C%5C%5C%5C%22object%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22user_id%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22{ID_Target}%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22reporter_id%5C%5C%5C%22%3A17841411148902937%2C%5C%5C%5C%22responsible_id%5C%5C%5C%22%3A17841402180538198%2C%5C%5C%5C%22locale%5C%5C%5C%22%3A%5C%5C%5C%22en_US%5C%5C%5C%22%2C%5C%5C%5C%22app_platform%5C%5C%5C%22%3A11%2C%5C%5C%5C%22extra_data%5C%5C%5C%22%3A%7B%5C%5C%5C%22container_module%5C%5C%5C%22%3A%5C%5C%5C%22profilePage%5C%5C%5C%22%2C%5C%5C%5C%22app_version%5C%5C%5C%22%3A%5C%5C%5C%22None%5C%5C%5C%22%2C%5C%5C%5C%22is_dark_mode%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22app_id%5C%5C%5C%22%3A936619743392459%2C%5C%5C%5C%22sentry_feature_map%5C%5C%5C%22%3A%5C%5C%5C%22Jtzt%5C%5C%5C%5C%5C%5C%5C%2FLZSGA8xNTEuMjU1LjI0Ni4xMjAYck1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS85My4wLjQ1NzcuNjMgU2FmYXJpLzUzNy4zNhgFZW5fVVMcGCAwOTVhMjg4ZDRiNDljM2YyOTE4ODA1MjhkNmQ2OGQzYhgAGCA5NTgwYzQ5ZmMzNTJkZDk3MmUwNDIzMTM0ZjcxZjEyYhgAFabvBAA8LBgcWU50OFlRQUxBQUhwTWZ6TVg1LW5xLVV2VnBQdhbQ6%2B6Vy14AHBUUKwAAIjw5FQAZFQA5FQAAGCA1NGJjNjVkY2ExYTE0MmJkYjUwOGYxYzMzZmI0MjAwORUCERIYDzkzNjYxOTc0MzM5MjQ1ORwWvMf947v2tz8YQDU5NjI5NjY4M2QyYThiNmY1Mzg3YzNhYzA4ZjkzZjE3NzBhNzNjZmYwNmEyMGQ5MTFkNjhhYTI0NjA1OTZkZmEAHBUEABIoJmh0dHBzOi8vd3d3Lmluc3RhZ3JhbS5jb20vZHV5ZW5uLmhpcHAvGA5YTUxIdHRwUmVxdWVzdAAWssiT3eeqsT8oHC9yZXBvcnRzL3dlYi9nZXRfZnJ4X3Byb21wdC8WChbU6JmUDAA%3D%5C%5C%5C%22%2C%5C%5C%5C%22shopping_session_id%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22logging_extra%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22is_in_holdout%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22preloading_enabled%5C%5C%5C%22%3Anull%7D%2C%5C%5C%5C%22frx_feedback_submitted%5C%5C%5C%22%3Afalse%2C%5C%5C%5C%22additional_data%5C%5C%5C%22%3A%7B%7D%7D%5C%22%2C%5C%22screen%5C%22%3A%5C%22frx_policy_education%5C%22%2C%5C%22flow_info%5C%22%3A%5C%22%7B%5C%5C%5C%22nt%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22graphql%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22enrollment_info%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22ig%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22ig_container_module%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22profilePage%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22bloks%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22initial_screen_id%5C%5C%5C%5C%5C%5C%5C%22%3Anull%7D%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%228cf43e51-ba3a-497c-bc32-e8a87a4ac373%5C%5C%5C%22%7D%5C%22%2C%5C%22previous_state%5C%22%3Anull%7D%22%7D&action_type=2&frx_prompt_request_type=4'
+		hate= f'entry_point=1&location=2&object_type=5&object_id={ID_Target}&container_module=profilePage&context=%7B%22tags%22%3A%5B%22ig_report_account%22%2C%22ig_its_inappropriate%22%2C%22ig_hate_speech_v3%22%5D%2C%22ixt_context_from_www%22%3A%22%7B%5C%22schema%5C%22%3A%5C%22ig_frx%5C%22%2C%5C%22session%5C%22%3A%5C%22%7B%5C%5C%5C%22location%5C%5C%5C%22%3A%5C%5C%5C%22ig_profile%5C%5C%5C%22%2C%5C%5C%5C%22entry_point%5C%5C%5C%22%3A%5C%5C%5C%22chevron_button%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%22603524e5-1a24-4b2c-aa1a-a6809127c6a2%5C%5C%5C%22%2C%5C%5C%5C%22tags%5C%5C%5C%22%3A%5B%5C%5C%5C%22ig_report_account%5C%5C%5C%22%2C%5C%5C%5C%22ig_its_inappropriate%5C%5C%5C%22%2C%5C%5C%5C%22ig_hate_speech_v3%5C%5C%5C%22%5D%2C%5C%5C%5C%22object%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22user_id%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22{ID_Target}%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22reporter_id%5C%5C%5C%22%3A17841432784973669%2C%5C%5C%5C%22responsible_id%5C%5C%5C%22%3A17841447119997547%2C%5C%5C%5C%22locale%5C%5C%5C%22%3A%5C%5C%5C%22en_US%5C%5C%5C%22%2C%5C%5C%5C%22app_platform%5C%5C%5C%22%3A11%2C%5C%5C%5C%22extra_data%5C%5C%5C%22%3A%7B%5C%5C%5C%22container_module%5C%5C%5C%22%3A%5C%5C%5C%22profilePage%5C%5C%5C%22%2C%5C%5C%5C%22app_version%5C%5C%5C%22%3A%5C%5C%5C%22None%5C%5C%5C%22%2C%5C%5C%5C%22is_dark_mode%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22app_id%5C%5C%5C%22%3A936619743392459%2C%5C%5C%5C%22sentry_feature_map%5C%5C%5C%22%3A%5C%5C%5C%22JsCcnID0ARgOMTUxLjI1NC4xMzcuNTcYck1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS85My4wLjQ1NzcuNjMgU2FmYXJpLzUzNy4zNhgFZW5fVVMcGCAxMzlhM2IxMTU3NmQzZjkzMTU4MzlhNzVkNzQ1MDBhMxgAGCA5NTgwYzQ5ZmMzNTJkZDk3MmUwNDIzMTM0ZjcxZjEyYhgAFabvBAA8LBgcWU9EN0x3QUxBQUhOY1QxeW1lQkdmNFBnclJmchawvqntzV4AHBUUKwAAIjw5FQAZFQA5FQAAGCA0YmFkNzg2YTQ4YTk0NTcwOWFkNDE4ZGYxMjQyYzVjMxUCERIYDzkzNjYxOTc0MzM5MjQ1ORwW3KLs8cKvsj8YQDZkMmM5MmUzMmZkYWVmM2ZhNWE3NDEzNWI2NzJkODBmN2Y2ZTM4MWNhNjc1OGNiYWE2MjUwMjQ4YWU3MTk4M2MAHBUEABIoJWh0dHBzOi8vd3d3Lmluc3RhZ3JhbS5jb20vaHVudGVyLmVuZC8YDlhNTEh0dHBSZXF1ZXN0ABbKvfX2iKyxPygcL3JlcG9ydHMvd2ViL2dldF9mcnhfcHJvbXB0LxYeFqjr%5C%5C%5C%5C%5C%5C%5C%2FZMMAA%3D%3D%5C%5C%5C%22%2C%5C%5C%5C%22shopping_session_id%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22logging_extra%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22is_in_holdout%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22preloading_enabled%5C%5C%5C%22%3Anull%7D%2C%5C%5C%5C%22frx_feedback_submitted%5C%5C%5C%22%3Afalse%2C%5C%5C%5C%22additional_data%5C%5C%5C%22%3A%7B%7D%7D%5C%22%2C%5C%22screen%5C%22%3A%5C%22frx_policy_education%5C%22%2C%5C%22flow_info%5C%22%3A%5C%22%7B%5C%5C%5C%22nt%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22graphql%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22enrollment_info%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22ig%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22ig_container_module%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22profilePage%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22bloks%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22initial_screen_id%5C%5C%5C%5C%5C%5C%5C%22%3Anull%7D%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%22603524e5-1a24-4b2c-aa1a-a6809127c6a2%5C%5C%5C%22%7D%5C%22%2C%5C%22previous_state%5C%22%3Anull%7D%22%7D&action_type=2&frx_prompt_request_type=4'
+		firearms = f'entry_point=1&location=2&object_type=5&object_id={ID_Target}&container_module=profilePage&context=%7B%22tags%22%3A%5B%22ig_report_account%22%2C%22ig_its_inappropriate%22%2C%22ig_sale_of_illegal_or_regulated_goods_v3%22%5D%2C%22ixt_context_from_www%22%3A%22%7B%5C%22schema%5C%22%3A%5C%22ig_frx%5C%22%2C%5C%22session%5C%22%3A%5C%22%7B%5C%5C%5C%22location%5C%5C%5C%22%3A%5C%5C%5C%22ig_profile%5C%5C%5C%22%2C%5C%5C%5C%22entry_point%5C%5C%5C%22%3A%5C%5C%5C%22chevron_button%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%2260f89379-b764-4709-9f07-225e7b73905e%5C%5C%5C%22%2C%5C%5C%5C%22tags%5C%5C%5C%22%3A%5B%5C%5C%5C%22ig_report_account%5C%5C%5C%22%2C%5C%5C%5C%22ig_its_inappropriate%5C%5C%5C%22%2C%5C%5C%5C%22ig_sale_of_illegal_or_regulated_goods_v3%5C%5C%5C%22%5D%2C%5C%5C%5C%22object%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22user_id%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22{ID_Target}%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22reporter_id%5C%5C%5C%22%3A17841411148902937%2C%5C%5C%5C%22responsible_id%5C%5C%5C%22%3A17841401016706680%2C%5C%5C%5C%22locale%5C%5C%5C%22%3A%5C%5C%5C%22en_US%5C%5C%5C%22%2C%5C%5C%5C%22app_platform%5C%5C%5C%22%3A11%2C%5C%5C%5C%22extra_data%5C%5C%5C%22%3A%7B%5C%5C%5C%22container_module%5C%5C%5C%22%3A%5C%5C%5C%22profilePage%5C%5C%5C%22%2C%5C%5C%5C%22app_version%5C%5C%5C%22%3A%5C%5C%5C%22None%5C%5C%5C%22%2C%5C%5C%5C%22is_dark_mode%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22app_id%5C%5C%5C%22%3A936619743392459%2C%5C%5C%5C%22sentry_feature_map%5C%5C%5C%22%3A%5C%5C%5C%22Jtzt%5C%5C%5C%5C%5C%5C%5C%2FLZSGA4xNTEuMjU0LjEzNy41NxhyTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzkzLjAuNDU3Ny42MyBTYWZhcmkvNTM3LjM2GAVlbl9VUxwYIDA5NWEyODhkNGI0OWMzZjI5MTg4MDUyOGQ2ZDY4ZDNiGAAYIDk1ODBjNDlmYzM1MmRkOTcyZTA0MjMxMzRmNzFmMTJiGAAVpu8EADwsGBxZTnQ4WVFBTEFBSHBNZnpNWDUtbnEtVXZWcFB2FtDr7pXLXgAcFRQrAAAiPDkVABkVADkVAAAYIGI5ODYzMDZkZjVhOTRhNjlhMzM2OGYwZDAxNTFjYWRlFQIREhgPOTM2NjE5NzQzMzkyNDU5HBbWjpWQ8Iu8PxhAMDkwMzVlOTM2ZThhZTYzZDA5MWY3MWRhMDgwMzQ0ZTIzZjIzN2Y2YjY1ODdiMzhkZDAzNTI3NzliOGM0ZWY0NwAcFQQAEigjaHR0cHM6Ly93d3cuaW5zdGFncmFtLmNvbS9sZW9tZXNzaS8YDlhNTEh0dHBSZXF1ZXN0ABayyJPd56qxPygcL3JlcG9ydHMvd2ViL2dldF9mcnhfcHJvbXB0LxYUFuKo%5C%5C%5C%5C%5C%5C%5C%2FpMMAA%3D%3D%5C%5C%5C%22%2C%5C%5C%5C%22shopping_session_id%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22logging_extra%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22is_in_holdout%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22preloading_enabled%5C%5C%5C%22%3Anull%7D%2C%5C%5C%5C%22frx_feedback_submitted%5C%5C%5C%22%3Afalse%2C%5C%5C%5C%22additional_data%5C%5C%5C%22%3A%7B%7D%7D%5C%22%2C%5C%22screen%5C%22%3A%5C%22frx_tag_selection_screen%5C%22%2C%5C%22flow_info%5C%22%3A%5C%22%7B%5C%5C%5C%22nt%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22graphql%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22enrollment_info%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22ig%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22ig_container_module%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22profilePage%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22bloks%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22initial_screen_id%5C%5C%5C%5C%5C%5C%5C%22%3Anull%7D%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%2260f89379-b764-4709-9f07-225e7b73905e%5C%5C%5C%22%7D%5C%22%2C%5C%22previous_state%5C%22%3Anull%7D%22%7D&selected_tag_types=%5B%22ig_firearms_v3%22%5D&action_type=2&frx_prompt_request_type=2'
+		spam= f'entry_point=1&location=2&object_type=5&object_id={ID_Target}&container_module=profilePage&context=%7B%22tags%22%3A%5B%22ig_report_account%22%2C%22ig_its_inappropriate%22%5D%2C%22ixt_context_from_www%22%3A%22%7B%5C%22schema%5C%22%3A%5C%22ig_frx%5C%22%2C%5C%22session%5C%22%3A%5C%22%7B%5C%5C%5C%22location%5C%5C%5C%22%3A%5C%5C%5C%22ig_profile%5C%5C%5C%22%2C%5C%5C%5C%22entry_point%5C%5C%5C%22%3A%5C%5C%5C%22chevron_button%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%2260f89379-b764-4709-9f07-225e7b73905e%5C%5C%5C%22%2C%5C%5C%5C%22tags%5C%5C%5C%22%3A%5B%5C%5C%5C%22ig_report_account%5C%5C%5C%22%2C%5C%5C%5C%22ig_its_inappropriate%5C%5C%5C%22%5D%2C%5C%5C%5C%22object%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22user_id%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22{ID_Target}%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22reporter_id%5C%5C%5C%22%3A17841446698321353%2C%5C%5C%5C%22responsible_id%5C%5C%5C%22%3A17841408854570735%2C%5C%5C%5C%22locale%5C%5C%5C%22%3A%5C%5C%5C%22en_US%5C%5C%5C%22%2C%5C%5C%5C%22app_platform%5C%5C%5C%22%3A11%2C%5C%5C%5C%22extra_data%5C%5C%5C%22%3A%7B%5C%5C%5C%22container_module%5C%5C%5C%22%3A%5C%5C%5C%22profilePage%5C%5C%5C%22%2C%5C%5C%5C%22app_version%5C%5C%5C%22%3A%5C%5C%5C%22None%5C%5C%5C%22%2C%5C%5C%5C%22is_dark_mode%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22app_id%5C%5C%5C%22%3A936619743392459%2C%5C%5C%5C%22sentry_feature_map%5C%5C%5C%22%3A%5C%5C%5C%22JoTt%5C%5C%5C%5C%5C%5C%5C%2FpXcAhgNMzcuMjM5LjEzOS4zMhhOTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NDsgcnY6ODguMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC84OC4wGAVlbl9VUxwYIGI3NTRkM2RiODA2YzdmOGE2MjY5MjljNzcyNmY1NjVmGCA5YjFhMzAzMTc5ZWEyYTYxYjdiY2IyNTMwZjVkNDA1NxggZDJlYzU5NGQ2MzJjYmZmYWZjNWQ5ODA4NzA3NGZiZTcYABWsmAYAPCwYHFlKODlBUUFMQUFGTDVUZ0RrTTd0REJKNkZjZUMW0K%2By4K1eABwVFCsAACI8ORUAGRUAORUAABggNjFlYTkxZDI0ZDJlNDRmNzg3M2ZkMDU3MTIzYzc3NTMVAhESGA85MzY2MTk3NDMzOTI0NTkcFs7pqLL%2B7s%5C%5C%5C%5C%5C%5C%5C%2FGEA3NzBhYTIxNzM4MDhhOWVjZTA3ZjZmNDk4MGYzZDYxNGU2M2E2NDQ3MTQ0MGJiN2ZmYjdlZjI1NWI0ZTEwYTcwABwVBAASKB9odHRwczovL3d3dy5pbnN0YWdyYW0uY29tLzBqNGovGA5YTUxIdHRwUmVxdWVzdAAWkpfcy%5C%5C%5C%5C%5C%5C%5C%2FCssT8oHC9yZXBvcnRzL3dlYi9nZXRfZnJ4X3Byb21wdC8WBhbq9vmJDAA%3D%5C%5C%5C%22%2C%5C%5C%5C%22shopping_session_id%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22logging_extra%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22is_in_holdout%5C%5C%5C%22%3Anull%7D%2C%5C%5C%5C%22frx_feedback_submitted%5C%5C%5C%22%3Afalse%2C%5C%5C%5C%22additional_data%5C%5C%5C%22%3A%7B%7D%7D%5C%22%2C%5C%22screen%5C%22%3A%5C%22frx_tag_selection_screen%5C%22%2C%5C%22flow_info%5C%22%3A%5C%22%7B%5C%5C%5C%22nt%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22graphql%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22enrollment_info%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22ig%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22ig_container_module%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22profilePage%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%2260f89379-b764-4709-9f07-225e7b73905e%5C%5C%5C%22%7D%5C%22%2C%5C%22previous_state%5C%22%3Anull%7D%22%7D&selected_tag_types=%5B%22ig_spam_v3%22%5D&frx_prompt_request_type=2'
+		violence= f'entry_point=1&location=2&object_type=5&object_id={ID_Target}&container_module=profilePage&context=%7B%22tags%22%3A%5B%22ig_report_account%22%2C%22ig_its_inappropriate%22%2C%22ig_violence_parent%22%5D%2C%22ixt_context_from_www%22%3A%22%7B%5C%22schema%5C%22%3A%5C%22ig_frx%5C%22%2C%5C%22session%5C%22%3A%5C%22%7B%5C%5C%5C%22location%5C%5C%5C%22%3A%5C%5C%5C%22ig_profile%5C%5C%5C%22%2C%5C%5C%5C%22entry_point%5C%5C%5C%22%3A%5C%5C%5C%22chevron_button%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%2260f89379-b764-4709-9f07-225e7b73905e%5C%5C%5C%22%2C%5C%5C%5C%22tags%5C%5C%5C%22%3A%5B%5C%5C%5C%22ig_report_account%5C%5C%5C%22%2C%5C%5C%5C%22ig_its_inappropriate%5C%5C%5C%22%2C%5C%5C%5C%22ig_violence_parent%5C%5C%5C%22%5D%2C%5C%5C%5C%22object%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22user_id%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22{ID_Target}%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22reporter_id%5C%5C%5C%22%3A17841446698321353%2C%5C%5C%5C%22responsible_id%5C%5C%5C%22%3A17841440541551390%2C%5C%5C%5C%22locale%5C%5C%5C%22%3A%5C%5C%5C%22en_US%5C%5C%5C%22%2C%5C%5C%5C%22app_platform%5C%5C%5C%22%3A11%2C%5C%5C%5C%22extra_data%5C%5C%5C%22%3A%7B%5C%5C%5C%22container_module%5C%5C%5C%22%3A%5C%5C%5C%22profilePage%5C%5C%5C%22%2C%5C%5C%5C%22app_version%5C%5C%5C%22%3A%5C%5C%5C%22None%5C%5C%5C%22%2C%5C%5C%5C%22is_dark_mode%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22app_id%5C%5C%5C%22%3A936619743392459%2C%5C%5C%5C%22sentry_feature_map%5C%5C%5C%22%3A%5C%5C%5C%22JoTt%5C%5C%5C%5C%5C%5C%5C%2FpXcAhgNMzcuMjM5LjEzOS4zMhhOTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NDsgcnY6ODguMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC84OC4wGAVlbl9VUxwYIGI3NTRkM2RiODA2YzdmOGE2MjY5MjljNzcyNmY1NjVmGCA5YjFhMzAzMTc5ZWEyYTYxYjdiY2IyNTMwZjVkNDA1NxggZDJlYzU5NGQ2MzJjYmZmYWZjNWQ5ODA4NzA3NGZiZTcYABWsmAYAPCwYHFlKODlBUUFMQUFGTDVUZ0RrTTd0REJKNkZjZUMW0K%2By4K1eABwVFCsAACI8ORUAGRUAORUAABggODE0YThkNDM2OGY5NDQyZGJjNDgwYzQ2ZWUyYjE1ODkVAhESGA85MzY2MTk3NDMzOTI0NTkcFs7lpqLL%2B7s%5C%5C%5C%5C%5C%5C%5C%2FGEA3NzBhYTIxNzM4MDhhOWVjZTA3ZjZmNDk4MGYzZDYxNGU2M2E2NDQ3MTQ0MGJiN2ZmYjdlZjI1NWI0ZTEwYTcwABwVBAASKCNodHRwczovL3d3dy5pbnN0YWdyYW0uY29tL2dpdnRfb3BzLxgOWE1MSHR0cFJlcXVlc3QAFpKX3MvwrLE%5C%5C%5C%5C%5C%5C%5C%2FKBwvcmVwb3J0cy93ZWIvZ2V0X2ZyeF9wcm9tcHQvFgYW6vb5iQwA%5C%5C%5C%22%2C%5C%5C%5C%22shopping_session_id%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22logging_extra%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22is_in_holdout%5C%5C%5C%22%3Anull%7D%2C%5C%5C%5C%22frx_feedback_submitted%5C%5C%5C%22%3Afalse%2C%5C%5C%5C%22additional_data%5C%5C%5C%22%3A%7B%7D%7D%5C%22%2C%5C%22screen%5C%22%3A%5C%22frx_tag_selection_screen%5C%22%2C%5C%22flow_info%5C%22%3A%5C%22%7B%5C%5C%5C%22nt%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22graphql%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22enrollment_info%5C%5C%5C%22%3Anull%2C%5C%5C%5C%22ig%5C%5C%5C%22%3A%5C%5C%5C%22%7B%5C%5C%5C%5C%5C%5C%5C%22ig_container_module%5C%5C%5C%5C%5C%5C%5C%22%3A%5C%5C%5C%5C%5C%5C%5C%22profilePage%5C%5C%5C%5C%5C%5C%5C%22%7D%5C%5C%5C%22%2C%5C%5C%5C%22session_id%5C%5C%5C%22%3A%5C%5C%5C%2260f89379-b764-4709-9f07-225e7b73905e%5C%5C%5C%22%7D%5C%22%2C%5C%22previous_state%5C%22%3Anull%7D%22%7D&selected_tag_types=%5B%22ig_violence_threat%22%5D&action_type=2&frx_prompt_request_type=2'
+		os.system("clear")
+		d
+		while True :
+			if x == 1 :
+				report = r.post(url_Rep, data=self, headers=header)
+			elif x == 2 :
+				report = r.post(url_Rep, data=hate, headers=header)
+			elif x == 3 :
+				report = r.post(url_Rep, data=firearms, headers=header)
+			elif x == 4 :
+				report = r.post(url_Rep, data=spam, headers=header)
+			elif x == 5 :
+				report = r.post(url_Rep, data=violence, headers=header)
+			i=report.json()
+			if "ok" in i["status"] :
+				done += 1
+			else :
+				error += 1
+			print(f"\r\033[1;30m[\033[0;37m$\033[1;30m] \033[1;32mDONE -{done}- \033[0;37m| \033[1;31mERROR -{error}- \033[0;37m| Target : {Target}",end='')
+	elif ("checkpoint_required") or ("challenge_required") in Log.text:
+		print("\033[1;30m[\033[0;37m!\033[1;30m] \033[1;31mERROR : Secure")
+		exit()
+	elif '"two_factor_required":true' in Log.text:
+		print("\033[1;30m[\033[0;37m!\033[1;30m] \033[1;31mERROR : 2FA")
+		exit()
+	else:
+		print("\033[1;30m[\033[0;37m!\033[1;30m]\033[1;31m ERROR")
+ops()
